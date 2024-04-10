@@ -1,8 +1,8 @@
-public class Good {
+public class Goods {
     String name;
     double price;
 
-    Good(String name, double price) {
+    Goods(String name, double price) {
         this.name = name;
         this.price = price;
     }

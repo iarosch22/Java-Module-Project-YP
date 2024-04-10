@@ -12,31 +12,52 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            clients = scanner.nextInt();
+            if (scanner.hasNextInt()) {
+                clients = scanner.nextInt();
 
-            if (clients == 1) {
-                System.out.println("Считать нечего. Спасибо!");
-                break;
-            } else if (clients > 1) {
-                calculator.setClients(clients);
-                break;
+                if (clients == 1) {
+                    System.out.println("Считать нечего. Спасибо!");
+                    break;
+                } else if (clients > 1) {
+                    calculator.setClients(clients);
+                    break;
+                } else {
+                    System.out.println("Введено неверное значение. Просьба повторить еще.");
+                }
             } else {
                 System.out.println("Введено неверное значение. Просьба повторить еще.");
+                scanner.next();
             }
         }
 
         if (clients > 1) {
+            String name;
+            double price;
+
             System.out.println("Необходимо сообщить название товара и его стоимость.");
 
             while (true) {
-                String name = scanner.next();
+                System.out.println("Введите название товара либо 'Завершить'");
+                name = scanner.next();
 
                 if (name.equalsIgnoreCase("завершить")) {
                     System.out.println("Добавление товаров завершено.");
                     break;
                 }
 
-                double price = scanner.nextDouble();
+                System.out.println("Введите стоимость товара.");
+
+                while (true) {
+                    if (scanner.hasNextDouble()) {
+                        price = scanner.nextDouble();
+                        break;
+                    } else {
+                        System.out.println("Введено неверное значение. Просьба повторить еще.");
+                        scanner.next();
+                    }
+                }
+
+
 
                 calculator.setGoods(name, price);
 
@@ -48,5 +69,7 @@ public class Main {
             calculator.printGoods();
             System.out.println("Каждый должен заплатить по " + formatter.formatPaid(calculator.getSplitBill()));
         }
+
+        scanner.close();
     }
 }
