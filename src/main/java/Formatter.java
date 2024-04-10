@@ -6,7 +6,7 @@ public class Formatter {
         this.paid = Math.floor(paid) % 10;
 
         if (this.paid == 1.0) {
-            this.roublesFormat = "рубль";
+            this.roublesFormat = "рублю";
         } else if (this.paid > 1.0 && this.paid <= 4.0) {
             this.roublesFormat = "рубля";
         } else {
