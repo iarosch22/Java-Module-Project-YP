@@ -1,13 +1,9 @@
 import java.util.ArrayList;
 
 public class Calculator {
-    int clients;
     ArrayList<Goods> goods = new ArrayList<>();
     double totalBill;
 
-    public void setClients(int clients) {
-        this.clients = clients;
-    }
     public void setGoods(String name, double price) {
         this.goods.add( new Goods(name, price));
         this.totalBill += price;
@@ -19,7 +15,7 @@ public class Calculator {
         }
     }
 
-    public double getSplitBill() {
+    public double getSplitBill(int clients) {
         return totalBill / clients;
     }
 }

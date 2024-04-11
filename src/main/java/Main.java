@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        int clients;
+        int clients = 0;
         Calculator calculator = new Calculator();
         Formatter formatter = new Formatter();
 
@@ -10,6 +10,7 @@ public class Main {
         System.out.println("На сколько человек необходимо разделить счет?");
 
         Scanner scanner = new Scanner(System.in);
+        scanner.useDelimiter("\n");
 
         while (true) {
             if (scanner.hasNextInt()) {
@@ -19,14 +20,15 @@ public class Main {
                     System.out.println("Считать нечего. Спасибо!");
                     break;
                 } else if (clients > 1) {
-                    calculator.setClients(clients);
+                    scanner.nextLine();
                     break;
                 } else {
                     System.out.println("Введено неверное значение. Просьба повторить еще.");
+                    scanner.nextLine();
                 }
             } else {
                 System.out.println("Введено неверное значение. Просьба повторить еще.");
-                scanner.next();
+                scanner.nextLine();
             }
         }
 
@@ -37,37 +39,44 @@ public class Main {
             System.out.println("Необходимо сообщить название товара и его стоимость.");
 
             while (true) {
-                System.out.println("Введите название товара либо 'Завершить'");
-                name = scanner.next();
+                System.out.println("Введите название товара");
+                name = scanner.nextLine();
 
-                if (name.equalsIgnoreCase("завершить")) {
-                    System.out.println("Добавление товаров завершено.");
-                    break;
-                }
-
-                System.out.println("Введите стоимость товара.");
+                System.out.println("Введите стоимость товара");
 
                 while (true) {
                     if (scanner.hasNextDouble()) {
                         price = scanner.nextDouble();
-                        break;
+
+                        if (price > 0) {
+                            scanner.nextLine();
+                            break;
+                        } else {
+                            System.out.println("Введено неверное значение. Просьба повторить еще.");
+                            scanner.nextLine();
+                        }
                     } else {
                         System.out.println("Введено неверное значение. Просьба повторить еще.");
-                        scanner.next();
+                        scanner.nextLine();
                     }
                 }
-
-
 
                 calculator.setGoods(name, price);
 
                 System.out.println("Товар " + name + " по цене " + price + " успешно добавлен");
 
-                System.out.println("При наличии товаров продолжайте вводить название и стоимость, если нет, то введите команду 'Завершить'");
+                System.out.println("Если товары закончились введите команду 'Завершить', если нет, то введите любой другой символ");
+
+                String answer = scanner.nextLine();
+
+                if (answer.equalsIgnoreCase("завершить")) {
+                    System.out.println("Добавление товаров завершено.");
+                    break;
+                }
             }
 
             calculator.printGoods();
-            System.out.println("Каждый должен заплатить по " + formatter.formatPaid(calculator.getSplitBill()));
+            System.out.println("Каждый должен заплатить по " + formatter.formatPaid(calculator.getSplitBill(clients)));
         }
 
         scanner.close();
